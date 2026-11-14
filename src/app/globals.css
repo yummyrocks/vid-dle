@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ===== Tema Terang (default) ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-soft: #f5f6fa;
+  --card: #ffffff;
+  --card-soft: #f7f9ff;
+  --ink: #232a45;
+  --ink-soft: #66708a;
+  --line: rgba(35, 42, 69, 0.1);
+  --primary: #7b5cff;
+  --primary-strong: #6a45ff;
+  --primary-soft: rgba(123, 92, 255, 0.12);
+  --accent: #3ea8ff;
+  --accent-soft: rgba(62, 168, 255, 0.14);
+  --success: #0ea57a;
+  --success-soft: rgba(14, 165, 122, 0.12);
+  --danger: #e5484d;
+  --danger-soft: rgba(229, 72, 77, 0.12);
+  --amber: #d97706;
+  --amber-soft: rgba(217, 119, 6, 0.12);
+}
+
+/* ===== Tema Gelap ===== */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101326;
+  --bg-soft: #151a33;
+  --card: #1b2140;
+  --card-soft: #212849;
+  --ink: #eef1ff;
+  --ink-soft: #9aa4c7;
+  --line: rgba(238, 241, 255, 0.1);
+  --primary: #8f76ff;
+  --primary-strong: #7b5cff;
+  --primary-soft: rgba(143, 118, 255, 0.18);
+  --accent: #57b7ff;
+  --accent-soft: rgba(87, 183, 255, 0.16);
+  --success: #34d399;
+  --success-soft: rgba(52, 211, 153, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --amber: #fbbf24;
+  --amber-soft: rgba(251, 191, 36, 0.14);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-card: var(--card);
+  --color-card-soft: var(--card-soft);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --font-sans: var(--font-nunito);
+  --font-mono: ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-nunito), system-ui, sans-serif;
+  min-height: 100dvh;
 }
