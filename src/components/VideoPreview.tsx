@@ -1,20 +1,24 @@
-import { useRef, useState } from "react";
+'use client'
+import { useEffect, useRef, useState } from "react";
 import { PauseIcon, PlayIcon } from "@phosphor-icons/react";
 
 export type VideoPreviewProps = {
   className?: string;
   src: string;
   previewDuration: number;
+  isMuted: boolean;
 };
 
 export default function VideoPreview({
   className,
   src,
   previewDuration,
+  isMuted
 }: VideoPreviewProps) {
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const [isPaused, setPaused] = useState(false);
+  const [isPaused, setPaused] = useState(true);
 
   const handleSeeking = () => {
     const video = videoRef.current;
@@ -58,9 +62,9 @@ export default function VideoPreview({
           ref={videoRef}
           width={400}
           height={400}
-          autoPlay
+          autoPlay={true}
           loop
-          muted
+          muted={isMuted}
           playsInline
           onTimeUpdate={handleTimeUpdate}
           onPause={handlePause}
