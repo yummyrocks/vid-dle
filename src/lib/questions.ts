@@ -1,4 +1,17 @@
-import type { Candidate, Difficulty, Question } from "./types";
+import type { Answer } from "./types";
+
+type Difficulty = "mudah" | "sedang" | "sulit" | "sangat-sulit" | "ekstrem";
+
+type Candidate = {
+  src: string;
+  answer: Answer;
+  hint: string;
+};
+
+export type Question = Candidate & {
+  id: string;
+  difficulty: Difficulty;
+};
 
 export const DIFFICULTY_ORDER: readonly Difficulty[] = [
   "mudah",

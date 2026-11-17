@@ -12,8 +12,17 @@ import ThemeToggle from "@/components/ThemeToggle";
 import VideoPlayer from "@/components/VideoPlayer";
 import ZoomModal from "@/components/ZoomModal";
 import { UNLOCK_STEPS, pickRandomSession } from "@/lib/questions";
+import type { Question } from "@/lib/questions";
 import { calcScore } from "@/lib/score";
-import type { Answer, FeedbackState, GamePhase, Question } from "@/lib/types";
+import type { Answer } from "@/lib/types";
+
+type GamePhase = "intro" | "playing" | "result" | "material";
+
+type FeedbackState = {
+  correct: boolean;
+  correctAnswer: Answer;
+  hint: string;
+} | null;
 
 const BEST_SCORE_KEY = "vid-dle-best-score";
 
