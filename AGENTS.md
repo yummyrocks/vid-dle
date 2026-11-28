@@ -77,7 +77,7 @@ tambahan seperti phosphor icons.
 
 # Commits & Contribution
 
-Jangan lakukan commit atau push ke branch `main` jika developer tidak menyuruh.
+Commit Setiap perubahan yang kamu lakukan tapi jangan push ke remote.
 Semua commit perlu penjelasan apa saja perubahannya dan mengapa diubah
 di commit description, dan credit dirimu sendiri pada commit description
 seperti "Ditulis oleh: \<model-slug\>". Jangan juga mengubah README jika
