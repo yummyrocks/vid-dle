@@ -1,11 +1,10 @@
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlayIcon } from "@phosphor-icons/react";
 import DecisionBar from "@/components/DecisionBar";
 import FeedbackPopup from "@/components/FeedbackPopup";
 import GameHeader from "@/components/GameHeader";
-import IntroScreen from "@/components/IntroScreen";
 import MaterialScreen from "@/components/MaterialScreen";
 import ResultScreen from "@/components/ResultScreen";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -15,6 +14,8 @@ import { UNLOCK_STEPS, pickRandomSession } from "@/lib/questions";
 import type { Question } from "@/lib/questions";
 import { calcScore } from "@/lib/score";
 import type { Answer } from "@/lib/types";
+import { redirect } from "next/navigation";
+
 
 type GamePhase = "intro" | "playing" | "result" | "material";
 
@@ -26,9 +27,29 @@ type FeedbackState = {
 
 const BEST_SCORE_KEY = "vid-dle-best-score";
 
+let currentPhaseG:GamePhase;
+let randomSession: Question[];
+if (typeof window !== 'undefined') {
+  
+  const raw = document.cookie.split("; ").find((row)=>row.startsWith("game-phase="));
+
+  if (!raw) {
+    document.cookie=`game-phase=intro; path=/; max-age=${ 60 * 60 * 24 * 30} SameSite=Lax`
+    currentPhaseG = "intro";
+  } else currentPhaseG = raw.slice("game-phase=".length) as GamePhase
+  
+  if (currentPhaseG === "intro") { redirect('/home'); } 
+  else if (currentPhaseG === "playing") {randomSession = pickRandomSession()}
+  
+  
+}
+
 export default function Home() {
-  const [phase, setPhase] = useState<GamePhase>("intro");
-  const [session, setSession] = useState<Question[]>([]);
+  
+  const [phase, setPhase] = useState<GamePhase>(currentPhaseG);
+  
+
+  const [session, setSession] = useState<Question[]>(randomSession);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [unlockIndex, setUnlockIndex] = useState(0);
   const [feedback, setFeedback] = useState<FeedbackState>(null);
@@ -45,15 +66,7 @@ export default function Home() {
   const soundOn = unlockIndex >= 1;
   const score = calcScore(correctCount);
 
-  const startGame = () => {
-    setSession(pickRandomSession());
-    setCurrentIndex(0);
-    setUnlockIndex(0);
-    setFeedback(null);
-    setCorrectCount(0);
-    setZoomOpen(false);
-    setPhase("playing");
-  };
+  
 
   const handleUnsure = () => {
     setUnlockIndex((index) => Math.min(index + 1, UNLOCK_STEPS.length - 1));
@@ -85,7 +98,6 @@ export default function Home() {
     }
   };
 
-  if (phase === "intro") return <IntroScreen onStart={startGame} />;
 
   if (phase === "result")
     return (
@@ -102,7 +114,7 @@ export default function Home() {
   if (phase === "material")
     return <MaterialScreen onRestart={startGame} onHome={() => setPhase("intro")} />;
 
-  if (!question) return null;
+  // if (!question) return null;
 
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 lg:py-8">
